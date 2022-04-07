@@ -6,10 +6,11 @@ import { ArticleListComponent } from './components/article-list/article-list.com
 
 import { HttpClientModule } from '@angular/common/http';
 import { ArticleService } from './services/article.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, ArticleListComponent],
-  imports: [BrowserModule, HttpClientModule],
+  imports: [BrowserModule, HttpClientModule, FormsModule],
   providers: [ArticleService],
   bootstrap: [AppComponent],
 })

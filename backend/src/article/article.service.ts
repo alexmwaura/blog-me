@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CommentsService } from 'src/comments/comments.service';
+import { Comment } from 'src/comments/entities/comment.entity';
 import { Repository } from 'typeorm';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
@@ -8,7 +10,9 @@ import { Article } from './entities/article.entity';
 @Injectable()
 export class ArticleService {
   constructor(
-    @InjectRepository(Article) private articeRepository: Repository<Article>,
+    @InjectRepository(Article)
+    private articeRepository: Repository<Article>,
+    private commentsService: CommentsService,
   ) {}
 
   async create(article: CreateArticleDto): Promise<Article> {
@@ -17,7 +21,7 @@ export class ArticleService {
   }
 
   findAll(): Promise<Article[]> {
-    return this.articeRepository.find();
+    return this.articeRepository.find({ relations: ['comments'] });
   }
 
   findOne(id: string) {

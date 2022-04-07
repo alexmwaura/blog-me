@@ -1,9 +1,12 @@
+import { Comment } from 'src/comments/entities/comment.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   BaseEntity,
+  ManyToOne,
+  OneToMany,
 } from 'typeorm';
 
 @Entity()
@@ -23,4 +26,10 @@ export class Article extends BaseEntity {
     default: () => 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date;
+
+  @OneToMany(() => Comment, (comment) => comment.article, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
+  comments: Comment[];
 }
